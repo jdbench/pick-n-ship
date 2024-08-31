@@ -30,3 +30,67 @@ model Session {
   collaborator  Boolean?  @default(false)
   emailVerified Boolean?  @default(false)
 }
+
+model Building {
+  id        Int        @id @default(autoincrement())
+  shop      Shop       @relation(fields: [shopId], references: [id])
+  name      String     @unique
+  locations Location[]
+  users     User[]
+  shopId    Int
+}
+
+model Location {
+  id         Int       @id @default(autoincrement())
+  building   Building  @relation(fields: [buildingId], references: [id])
+  name       String
+  buildingId Int
+  products   Product[]
+}
+
+model Product {
+  id        Int        @id
+  locations Location[]
+  shop      Shop       @relation(fields: [shopId], references: [id])
+  shopId    Int
+}
+
+model Shop {
+  id         Int          @id
+  buildings  Building[]
+  users      User[]
+  name       String       @unique
+  role       Role[]
+  Permission Permission[]
+  Product    Product[]
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  shops      Shop[]
+  roles      Role[]
+  Building   Building @relation(fields: [buildingId], references: [id])
+  buildingId Int
+  email      String   @unique
+  firstName  String
+  lastName   String
+}
+
+model Role {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  default     Boolean      @default(false)
+  shop        Shop         @relation(fields: [shopId], references: [id])
+  permissions Permission[]
+  users       User[]
+  shopId      Int
+}
+
+model Permission {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  role   Role?  @relation(fields: [roleId], references: [id])
+  roleId Int?
+  shop   Shop   @relation(fields: [shopId], references: [id])
+  shopId Int
+}
