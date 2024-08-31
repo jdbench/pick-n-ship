@@ -1,0 +1,32 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "57fafb2c3275a5e75772cd8d21cfa6ae"
+name = "pick-n-ship"
+handle = "pick-n-ship"
+application_url = "https://dos-cartridges-actors-finished.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "benapptest.myshopify.com"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://dos-cartridges-actors-finished.trycloudflare.com/auth/callback",
+  "https://dos-cartridges-actors-finished.trycloudflare.com/auth/shopify/callback",
+  "https://dos-cartridges-actors-finished.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-04"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks"
+
+[pos]
+embedded = false
